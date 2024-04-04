@@ -81,7 +81,7 @@ with open('CheckPoints.csv') as csv_file:
                         print("bars")
                         image[np.sum(a, axis=0)!=0]
                         image[np.sum(a, axis=1)!=0]
-
+                    
                     resize = max(image.shape[0]//2016,1)
                     image = image[::resize,::resize]
                     image = Image.fromarray(image)

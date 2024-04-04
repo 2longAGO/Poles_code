@@ -1,6 +1,7 @@
 import multiprocessing as mp
 from streetview import search_panoramas, get_panorama
 from os.path import exists
+import os
 import concurrent.futures
 import csv
 
@@ -9,11 +10,12 @@ def chunker(iterable, chunksize):
 
 def image_download(row):
     panos = search_panoramas(lat=row[0], lon=row[1])
-    print(len(panos))
     if(len(panos) != 0) :
         latest = panos[-1]
         if not exists(f'image_Y{latest.lat}X{latest.lon}.jpg') :
-            image = get_panorama(pano_id=latest.pano_id)
+            #print(len(panos))
+            print((len(os.listdir('/'))-15)/46090*100,'%')
+            image = get_panorama(pano_id=latest.pano_id,zoom=3)
             image.save(f'image_Y{latest.lat}X{latest.lon}.jpg', "jpeg")
 
 def get_image(row) :
@@ -31,7 +33,7 @@ if __name__ == '__main__':
     pool = mp.Pool(mp.cpu_count())
 
     # `pool.apply` the `get_image()`
-    results = [pool.apply(get_image,(row,)) for row in chunker(csv_reader,40)]
+    results = [pool.apply(get_image,(row,)) for row in chunker(csv_reader,10)]
 
     # close
     pool.close()    
