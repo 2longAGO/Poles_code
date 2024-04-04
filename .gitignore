@@ -1,0 +1,10 @@
+conv_dataset
+runs
+
+!conv_dataset/runs/segment/train26
+!conv_dataset/model_tester.py
+!conv_dataset/model_training.py
+
+*.jpg
+*.png
+*.zip
