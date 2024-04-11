@@ -14,7 +14,8 @@ def image_download(row):
         latest = panos[-1]
         if not exists(f'image_Y{latest.lat}X{latest.lon}.jpg') :
             #print(len(panos))
-            print((len(os.listdir('/'))-15)/46090*100,'%')
+            os.path
+            print((len(os.listdir(os.getcwd()))-15)/46090*100,'%')
             image = get_panorama(pano_id=latest.pano_id,zoom=3)
             image.save(f'image_Y{latest.lat}X{latest.lon}.jpg', "jpeg")
 
@@ -33,7 +34,7 @@ if __name__ == '__main__':
     pool = mp.Pool(mp.cpu_count())
 
     # `pool.apply` the `get_image()`
-    results = [pool.apply(get_image,(row,)) for row in chunker(csv_reader,10)]
+    results = [pool.apply(get_image,(row,)) for row in chunker(csv_reader,40)]
 
     # close
     pool.close()    
